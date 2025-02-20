@@ -67,7 +67,7 @@ const BonusCardScreen = () => {
               </View>
 
               {/* Edit Button */}
-              <TouchableOpacity style={styles.editBtn}>
+              <TouchableOpacity style={styles.editBtn} onPress={()=>navigation.navigate('editbonuscard',{item})}>
                 <Text>Edit</Text>
                 <Entypo name="edit" size={15} color={'#0008'} />
               </TouchableOpacity>
