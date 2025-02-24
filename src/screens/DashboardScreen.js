@@ -11,10 +11,10 @@ import {hp, wp} from '../constants/scale';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import pages from '../data/pages';
 import {useNavigation} from '@react-navigation/native';
-import { fonts } from '../constants/fonts';
+import {fonts} from '../constants/fonts';
 const DashboardScreen = () => {
   const navigation = useNavigation();
-  const handleNavigation = (title) => {
+  const handleNavigation = title => {
     switch (title) {
       case 'Products':
         navigation.navigate('products');
@@ -30,6 +30,9 @@ const DashboardScreen = () => {
         break;
       case 'Shop Info':
         navigation.navigate('shopinfo');
+        break;
+      case 'Content Management':
+        navigation.navigate('contentmanagement');
         break;
       default:
         console.log('Screen not found');
@@ -63,21 +66,29 @@ const DashboardScreen = () => {
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContainer}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.itemCard} onPress={() => handleNavigation(item.title)}>
+          <TouchableOpacity
+            style={styles.itemCard}
+            onPress={() => handleNavigation(item.title)}>
             <Image source={item.image} style={styles.imageCard} />
             <View style={styles.textContainer}>
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.subtitle}>{item.subtitle}</Text>
             </View>
-           <View style={{padding:7, marginRight:10, alignSelf: 'center',  borderRadius:20, borderWidth:1, }} >
-            <FeatherIcon
-              name="chevron-right"
-              size={24}
-              color="#555"
-              style={styles.chevronIcon}
-            />
+            <View
+              style={{
+                padding: 7,
+                marginRight: 10,
+                alignSelf: 'center',
+                borderRadius: 20,
+                borderWidth: 1,
+              }}>
+              <FeatherIcon
+                name="chevron-right"
+                size={24}
+                color="#555"
+                style={styles.chevronIcon}
+              />
             </View>
-           
           </TouchableOpacity>
         )}
       />
@@ -141,33 +152,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
-    borderColor:"#0003",
-    borderWidth:1,
+    borderColor: '#0003',
+    borderWidth: 1,
     marginVertical: 8,
-    justifyContent:"space-between",
+    justifyContent: 'space-between',
     width: wp(96),
     alignSelf: 'center',
   },
   imageCard: {
     width: wp(30),
-    height: hp(10)-2,
-    borderTopLeftRadius:12,
-    borderBottomLeftRadius:12,
-    
+    height: hp(10) - 2,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
   },
   textContainer: {
-    padding:12,
-    flex:1,
-   
+    padding: 12,
+    flex: 1,
   },
   title: {
     fontSize: 16,
-    fontFamily:fonts.PoppinsBold,
+    fontFamily: fonts.PoppinsBold,
     color: '#333',
   },
   subtitle: {
     fontSize: 12,
-    fontFamily:fonts.PoppinsMedium,
+    fontFamily: fonts.PoppinsMedium,
     color: '#666',
   },
   chevronIcon: {

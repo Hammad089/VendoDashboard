@@ -53,8 +53,6 @@ const BonusCardScreen = () => {
                 style={styles.image}
                 resizeMode="cover"
               />
-
-              {/* Details and Status in one row */}
               <View style={styles.detailsContainer}>
                 <View style={styles.row}>
                   <Text style={styles.title}>{item.details}</Text>
@@ -76,7 +74,6 @@ const BonusCardScreen = () => {
         )}
       />
 
-      {/* Floating Add Button */}
       <TouchableOpacity
         style={styles.PlusIcon}
         onPress={() => navigation.navigate('addbonusform')}>

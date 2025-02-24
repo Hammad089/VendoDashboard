@@ -13,6 +13,8 @@ import AddVocherForm from '../screens/AddVocherForm';
 import EditVocherForm from '../screens/EditVocherForm';
 import AddBonusForm from '../screens/AddBonusForm';
 import EditBonusCard from '../screens/EditBonusForm';
+import ContentManagement from '../screens/ContentManagement';
+import ContentManagementForm from '../screens/ContentManagementForm';
 const Stack = createNativeStackNavigator();
 const AuthStack = () => {
   return (
@@ -67,6 +69,16 @@ const AuthStack = () => {
        <Stack.Screen
         name="editbonuscard"
         component={EditBonusCard}
+        options={{title: ''}}
+      />
+       <Stack.Screen
+        name="contentmanagement"
+        component={ContentManagement}
+        options={{title: ''}}
+      />
+       <Stack.Screen
+        name="contentmanagementform"
+        component={ContentManagementForm}
         options={{title: ''}}
       />
     </Stack.Navigator>

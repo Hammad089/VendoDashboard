@@ -1,22 +1,20 @@
-import React, {useState} from 'react';
+import mime from 'mime';
+import React, { useState } from 'react';
 import {
-  Image,
   Keyboard,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {RFValue} from 'react-native-responsive-fontsize';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Input from '../components/Input';
-import {fonts} from '../constants/fonts';
-import {hp, wp} from '../constants/scale';
-import mime from 'mime';
+import { RFValue } from 'react-native-responsive-fontsize';
+import VoucherImagesComponent from '../components/VoucherImagesComponent';
+import VouchersFormInput from '../components/VouchersFormInput';
+import { fonts } from '../constants/fonts';
+import { hp, wp } from '../constants/scale';
 const AddVocherForm = () => {
   const [inputs, setInputs] = useState({
     title: '',
@@ -238,159 +236,26 @@ const AddVocherForm = () => {
   return (
     <View style={{flex: 1, backgroundColor: '#fff', padding: 20}}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Input
-          onChangeText={text => handleOnchange(text, 'providername')}
-          onFocus={() => handleError(null, 'providername')}
-          label="Provider Name"
-          value={inputs.providername}
-          placeholder="Provider Name"
-          error={errors.providername}
+        <VouchersFormInput
+          errors={errors}
+          inputs={inputs}
+          handleError={handleError}
+          handleOnchange={handleOnchange}
         />
-        <Input
-          onChangeText={text => handleOnchange(text, 'title')}
-          onFocus={() => handleError(null, 'title')}
-          label="Title"
-          value={inputs.title}
-          placeholder="Enter title"
-          error={errors.title}
+        <VoucherImagesComponent
+          productImage={productImage}
+          productImage2={productImage2}
+          ProductImages={ProductImage}
+          ProductImages2={ProductImage2}
+          RedemptionImage={RedemptionImage}
+          RedemptionImag={RedemptionImag}
+          deactivated={deactivated}
+          toggleDeactivated={toggleDeactivated}
+          welcomePage={welcomePage}
+          togglePage={togglePage}
+          isUnique={isUnique}
+          toggleisUnique={toggleisUnique}
         />
-        <Input
-          onChangeText={text => handleOnchange(text, 'quantity')}
-          onFocus={() => handleError(null, 'quantity')}
-          label="Quantity"
-          value={inputs.quantity}
-          placeholder="Enter quantity"
-          error={errors.quantity}
-        />
-        <Input
-          onFocus={() => setPickerMode('startDate')}
-          label="Start Date"
-          value={startDate}
-          placeholder="Select Start Date"
-        />
-        <Input
-          onFocus={() => setPickerMode('endDate')}
-          label="End Date"
-          value={endDate}
-          placeholder="Select End Date"
-        />
-        <Input
-          onChangeText={text => handleOnchange(text, 'LongDescription')}
-          onFocus={() => handleError(null, 'LongDescription')}
-          label="Long Description"
-          value={inputs.LongDescription}
-          placeholder="Enter Long Description"
-          error={errors.LongDescription}
-        />
-        <Input
-          onChangeText={text => handleOnchange(text, 'ShortDescription')}
-          onFocus={() => handleError(null, 'ShortDescription')}
-          label="Short Description"
-          value={inputs.ShortDescription}
-          placeholder="Enter ShortDescription"
-          error={errors.ShortDescription}
-        />
-        <View>
-          {productImage && (
-            <Image
-              source={{uri: productImage}}
-              style={{
-                width: 100,
-                height: 100,
-                marginBottom: 10,
-                borderRadius: 10,
-              }}
-            />
-          )}
-          <TouchableOpacity
-            style={styles.activeImageBtn}
-            onPress={() => ProductImage()}>
-            <AntDesign name="plus" size={25} color={'#fff'} />
-            <Text style={styles.activeImageText}>Active Image</Text>
-          </TouchableOpacity>
-          {productImage2 && (
-            <Image
-              source={{uri: productImage2}}
-              style={{
-                width: 100,
-                height: 100,
-                marginTop: 10,
-                borderRadius: 10,
-              }}
-            />
-          )}
-          <TouchableOpacity
-            style={styles.inactiveImage}
-            onPress={() => ProductImage2()}>
-            <AntDesign name="minus" size={25} color={'#fff'} />
-            <Text style={styles.activeImageText}>Inactive image</Text>
-          </TouchableOpacity>
-          {RedemptionImage && (
-            <Image
-              source={{uri: RedemptionImage}}
-              style={{
-                width: 100,
-                height: 100,
-                marginTop: 10,
-                borderRadius: 10,
-              }}
-            />
-          )}
-          <TouchableOpacity
-            style={styles.Redemption}
-            onPress={() => RedemptionImag()}>
-            <AntDesign name="plus" size={25} color={'#fff'} />
-            <Text style={styles.activeImageText}>Redemption Barcode</Text>
-          </TouchableOpacity>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: 10,
-            }}>
-            <Text>Only one voucher for one user.</Text>
-            <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
-              thumbColor={isUnique ? '#f5dd4b' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleisUnique}
-              value={isUnique}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: 10,
-            }}>
-            <Text>Welcome Page.</Text>
-            <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
-              thumbColor={welcomePage ? '#f5dd4b' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={togglePage}
-              value={welcomePage}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: 8,
-            }}>
-            <Text>Deactivated</Text>
-            <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
-              thumbColor={deactivated ? '#f5dd4b' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleDeactivated}
-              value={deactivated}
-            />
-          </View>
-        </View>
         <TouchableOpacity
           style={styles.addProductBtn}
           onPress={validate}
@@ -416,42 +281,6 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 10,
     backgroundColor: '#F3F4FB',
-  },
-  activeImageBtn: {
-    flexDirection: 'row',
-    columnGap: 10,
-    backgroundColor: 'purple',
-    width: wp(40),
-    height: hp(6),
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  activeImageText: {
-    color: '#fff',
-    fontSize: 14,
-  },
-  inactiveImage: {
-    marginTop: 10,
-    flexDirection: 'row',
-    columnGap: 10,
-    backgroundColor: 'purple',
-    width: wp(40),
-    height: hp(6),
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  Redemption: {
-    marginTop: 10,
-    flexDirection: 'row',
-    columnGap: 10,
-    backgroundColor: 'purple',
-    width: wp(50),
-    height: hp(6),
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   addProductBtn: {
     marginTop: 10,

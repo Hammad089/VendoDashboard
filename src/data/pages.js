@@ -31,8 +31,8 @@ const pages = [
     },
     {
         id:6,
-        title:'Products',
-        subtitle:'Manage all of your stories',
+        title:'Content Management',
+        subtitle:'Management',
         image:require('../assets/images/products.webp')
     }
 ]

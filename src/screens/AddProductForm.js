@@ -1,23 +1,22 @@
-import {useNavigation} from '@react-navigation/native';
+import mime from 'mime';
 import React, {useState} from 'react';
 import {
   Alert,
-  Image,
   Keyboard,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {RFValue} from 'react-native-responsive-fontsize';
+import AddProductInput from '../components/AddProductInput';
 import BottonSheet from '../components/BottomSheet';
-import Input from '../components/Input';
+import ProductsImagesComponent from '../components/ProductsImagesComponent';
+import ProductSwitches from '../components/ProductSwitches';
 import {fonts} from '../constants/fonts';
 import {hp, wp} from '../constants/scale';
-import mime from 'mime';
 const AddProductForm = () => {
   const [inputs, setInputs] = useState({
     ProductName: '',
@@ -160,7 +159,7 @@ const AddProductForm = () => {
         Shortdescription: '',
         longdescription: '',
         Ingredients: '',
-      })
+      });
       setLoading(false);
     }
   };
@@ -224,138 +223,24 @@ const AddProductForm = () => {
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Input
-          onChangeText={text => handleOnchange(text, 'ProductName')}
-          onFocus={() => handleError(null, 'ProductName')}
-          value={inputs.ProductName}
-          label="Product Name"
-          placeholder="Enter product name"
-          error={errors.ProductName}
+        <AddProductInput
+          errors={errors}
+          handleOnchange={handleOnchange}
+          handleError={handleError}
+          inputs={inputs}
         />
-        <Input
-          onChangeText={text => handleOnchange(text, 'MaxQuantity')}
-          onFocus={() => handleError(null, 'MaxQuantity')}
-          value={inputs.MaxQuantity}
-          label="Max Quantity"
-          placeholder="Enter Quantity"
-          error={errors.MaxQuantity}
+        <ProductsImagesComponent
+          ImageUrl={ImageUrl}
+          ImageUrl1={ImageUrl1}
+          handlePickPhoto={handlePickPhoto}
+          handlePickPhoto1={handlePickPhoto1}
         />
-        <Input
-          onChangeText={text => handleOnchange(text, 'Category')}
-          onFocus={() => setModalVisible(true)}
-          value={inputs.Category}
-          label="Category"
-          placeholder="Enter Category"
-          error={errors.Category}
+        <ProductSwitches
+          Status={Status}
+          setStatus={setStatus}
+          Deactivate={Deactivate}
+          setDeactivate={setDeactivate}
         />
-        <Input
-          onChangeText={text => handleOnchange(text, 'Size')}
-          onFocus={() => handleError(null, 'Size')}
-          value={inputs.Size}
-          label="Size"
-          placeholder="Size"
-          error={errors.Size}
-        />
-        <Input
-          onChangeText={text => handleOnchange(text, 'Ingredients')}
-          onFocus={() => handleError(null, 'Ingredients')}
-          value={inputs.Ingredients}
-          label="Ingredients"
-          placeholder="ingredients"
-          error={errors.Ingredients}
-        />
-        <Input
-          onChangeText={text => handleOnchange(text, 'Price')}
-          onFocus={() => handleError(null, 'Price')}
-          value={inputs.Price}
-          label="Price"
-          placeholder="Price"
-          error={errors.Price}
-        />
-        <Input
-          onChangeText={text => handleOnchange(text, 'Stock')}
-          onFocus={() => handleError(null, 'Stock')}
-          value={inputs.Stock}
-          label="Stock"
-          placeholder="Stock"
-          error={errors.Stock}
-        />
-        <Input
-          onChangeText={text => handleOnchange(text, 'Shortdescription')}
-          onFocus={() => handleError(null, 'Shortdescription')}
-          value={inputs.Shortdescription}
-          label="Short description"
-          placeholder="Short description"
-          error={errors.Shortdescription}
-        />
-        <Input
-          onChangeText={text => handleOnchange(text, 'longdescription')}
-          onFocus={() => handleError(null, 'longdescription')}
-          value={inputs.longdescription}
-          label="Long description"
-          placeholder="Long description"
-          error={errors.longdescription}
-        />
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Product image 1</Text>
-          {ImageUrl && (
-            <Image
-              source={{uri: ImageUrl}}
-              style={{
-                width: 100,
-                height: 100,
-                marginBottom: 10,
-                borderRadius: 10,
-              }}
-            />
-          )}
-          <TouchableOpacity
-            style={styles.productImage}
-            onPress={() => handlePickPhoto()}>
-            <Text style={styles.productImageText}>Product Image 1</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Product image 2</Text>
-          {ImageUrl1 && (
-            <Image
-              source={{uri: ImageUrl1}}
-              style={{
-                width: 100,
-                height: 100,
-                marginBottom: 10,
-                borderRadius: 10,
-              }}
-            />
-          )}
-          <TouchableOpacity
-            style={styles.productImage}
-            onPress={() => handlePickPhoto1()}>
-            <Text style={styles.productImageText}>Product Image 2</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.stausActive}>
-          <Text style={styles.label}>Status</Text>
-          <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
-            thumbColor={Status ? 'green' : 'red'}
-            ios_backgroundColor="#767577"
-            onValueChange={setStatus}
-            value={Status}
-            style={{height: 30}}
-          />
-        </View>
-        <View style={styles.stausActive}>
-          <Text style={styles.label}>Deactivate</Text>
-          <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
-            thumbColor={Deactivate ? 'green' : 'red'}
-            ios_backgroundColor="#767577"
-            onValueChange={setDeactivate}
-            value={Deactivate}
-            style={{height: 30}}
-          />
-        </View>
         <TouchableOpacity
           style={styles.addProductBtn}
           onPress={validate}
@@ -388,16 +273,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: hp(2),
   },
-  inputContainer: {
-    marginBottom: hp(2),
-  },
-  label: {
-    fontSize: RFValue(14),
-    fontWeight: '600',
-    color: '#555',
-    marginBottom: 6,
-    marginLeft: wp(1),
-  },
+
   input: {
     borderWidth: 1,
     borderColor: '#DDD',
@@ -437,25 +313,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(14),
     justifyContent: 'flex-start',
   },
-  productImage: {
-    backgroundColor: 'lightblue',
-    width: wp(40),
-    height: hp(6),
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  productImageText: {
-    fontSize: RFValue(14),
-    color: '#fff',
-    fontWeight: '500',
-  },
-  stausActive: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: 10,
-  },
+
   addProductBtn: {
     marginTop: 10,
     backgroundColor: '#04AA6D',
